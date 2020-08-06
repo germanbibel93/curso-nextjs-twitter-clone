@@ -1,0 +1,15 @@
+.container {
+  align-items: center;
+  display: flex;
+}
+
+.avatar {
+  border-radius: 9999px;
+  height: 48px;
+  object-fit: contain;
+  width: 48px;
+}
+
+.avatarWithText {
+  margin-right: 8px;
+}

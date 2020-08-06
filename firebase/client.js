@@ -1,4 +1,4 @@
-import * as firebase from 'firebase'
+import * as firebase from "firebase"
 
 const firebaseConfig = {
   apiKey: "AIzaSyC70LAhPV1qHunyNoZbOAk7QRUEh57PPbQ",
@@ -8,29 +8,27 @@ const firebaseConfig = {
   storageBucket: "devter-6661a.appspot.com",
   messagingSenderId: "807038871343",
   appId: "1:807038871343:web:cb90ded09f7def7d8063da",
-  measurementId: "G-909SM8WT3B"
+  measurementId: "G-909SM8WT3B",
 }
 
-!firebase.apps.length &&
-  firebase.initializeApp(firebaseConfig)
+!firebase.apps.length && firebase.initializeApp(firebaseConfig)
 
 const mapUserFromFirebaseAuthToUser = (user) => {
-  const {displayName, email, photoURL } = user
+  const { displayName, email, photoURL } = user
 
   return {
     avatar: photoURL,
     username: displayName,
-    email
+    email,
   }
 }
 
 export const onAuthStateChanged = (onChange) => {
-  return firebase
-    .auth()
-    .onAuthStateChanged(user => {
-      const normalizedUser = mapUserFromFirebaseAuthToUser(user)
-      onChange(normalizedUser)
-    })
+  return firebase.auth().onAuthStateChanged((user) => {
+    console.log(firebase.auth().currentUser.providerData)
+    const normalizedUser = user ? mapUserFromFirebaseAuthToUser(user) : null
+    onChange(normalizedUser)
+  })
 }
 
 export const loginWithGitHub = () => {
@@ -38,4 +36,7 @@ export const loginWithGitHub = () => {
   return firebase
     .auth()
     .signInWithPopup(githubProvider)
+    .then((res) => {
+      console.log(res)
+    })
 }
